@@ -115,9 +115,9 @@ export function TeaLeafClient() {
   if (isLoading) {
     return (
       <div className="w-full max-w-md mx-auto flex flex-col items-center justify-center text-center gap-4 p-8 rounded-lg bg-card/80 backdrop-blur-sm">
-        <Loader2 className="h-16 w-16 animate-spin text-primary" />
-        <h2 className="text-2xl font-bold font-headline">Analyzing...</h2>
-        <p className="text-muted-foreground">Our AI is inspecting your tea leaf. Please wait a moment.</p>
+        <Loader2 className="h-12 w-12 sm:h-16 sm:w-16 animate-spin text-primary" />
+        <h2 className="text-xl sm:text-2xl font-bold font-headline">Analyzing...</h2>
+        <p className="text-muted-foreground text-sm sm:text-base">Our AI is inspecting your tea leaf. Please wait a moment.</p>
       </div>
     );
   }
@@ -126,7 +126,7 @@ export function TeaLeafClient() {
     return (
       <Card className="w-full max-w-4xl mx-auto animate-in fade-in-50 duration-500">
         <CardHeader>
-            <CardTitle className="font-headline text-3xl">Analysis Complete</CardTitle>
+            <CardTitle className="font-headline text-2xl sm:text-3xl">Analysis Complete</CardTitle>
             <CardDescription>Here are the results of your tea leaf analysis.</CardDescription>
         </CardHeader>
         <CardContent className="grid md:grid-cols-2 gap-6 lg:gap-8 items-start">
@@ -136,7 +136,7 @@ export function TeaLeafClient() {
             </div>
             {analysis.qualityMetrics && analysis.qualityMetrics.length > 0 && (
                 <div>
-                  <h3 className="text-xl font-bold font-headline mb-3 text-foreground/90">Quality Measurements</h3>
+                  <h3 className="text-lg sm:text-xl font-bold font-headline mb-3 text-foreground/90">Quality Measurements</h3>
                   <ChartContainer
                     config={{
                       value: {
@@ -144,12 +144,12 @@ export function TeaLeafClient() {
                         color: "hsl(var(--chart-1))",
                       },
                     }}
-                    className="w-full h-[250px]"
+                    className="w-full h-[200px] sm:h-[250px]"
                   >
                     <BarChart data={analysis.qualityMetrics} margin={{ left: -20 }}>
                       <CartesianGrid vertical={false} />
-                      <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
-                      <YAxis tickFormatter={(value) => `${value}%`} />
+                      <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} tick={{fontSize: 12}} />
+                      <YAxis tickFormatter={(value) => `${value}%`} tick={{fontSize: 12}} />
                       <ChartTooltip
                         cursor={false}
                         content={<ChartTooltipContent hideLabel />}
@@ -162,11 +162,11 @@ export function TeaLeafClient() {
           </div>
           <div className="flex flex-col gap-4">
             <div>
-              <h3 className="text-xl font-bold font-headline mb-3 text-foreground/90">Condition Indicators</h3>
+              <h3 className="text-lg sm:text-xl font-bold font-headline mb-3 text-foreground/90">Condition Indicators</h3>
               <div className="flex flex-wrap gap-2">
                 {analysis.conditionIndicators.map((indicator, index) => (
-                  <Badge key={index} variant="secondary" className="text-sm py-1 px-3 border-accent/30 bg-accent/10 text-accent-foreground shadow-sm">
-                    <Leaf className="mr-2 h-3.5 w-3.5"/>
+                  <Badge key={index} variant="secondary" className="text-xs sm:text-sm py-1 px-3 border-accent/30 bg-accent/10 text-accent-foreground shadow-sm">
+                    <Leaf className="mr-2 h-3 w-3 sm:h-3.5 sm:w-3.5"/>
                     {indicator}
                   </Badge>
                 ))}
@@ -174,9 +174,9 @@ export function TeaLeafClient() {
             </div>
             <Separator />
             <div>
-              <h3 className="text-xl font-bold font-headline mb-3 text-foreground/90">Recommended Actions</h3>
+              <h3 className="text-lg sm:text-xl font-bold font-headline mb-3 text-foreground/90">Recommended Actions</h3>
               <div className="bg-background/50 p-4 rounded-lg border">
-                <p className="whitespace-pre-wrap text-sm leading-relaxed">{analysis.recommendedActions}</p>
+                <p className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed">{analysis.recommendedActions}</p>
               </div>
             </div>
           </div>
@@ -193,13 +193,13 @@ export function TeaLeafClient() {
   return (
     <Card className="w-full max-w-lg mx-auto transform transition-all duration-300">
       <CardHeader className="text-center">
-        <CardTitle className="font-headline text-3xl">Analyze Your Tea Leaf</CardTitle>
-        <CardDescription>Upload an image to get an AI-powered health assessment and recommendations.</CardDescription>
+        <CardTitle className="font-headline text-2xl sm:text-3xl">Analyze Your Tea Leaf</CardTitle>
+        <CardDescription className="text-sm sm:text-base">Upload an image to get an AI-powered health assessment and recommendations.</CardDescription>
       </CardHeader>
       <CardContent>
         {previewUrl ? (
             <div className="relative w-full aspect-video rounded-md overflow-hidden group border-2 border-dashed border-primary/50">
-                <Image src={previewUrl} alt="Image preview" layout="fill" objectFit="contain" />
+                <Image src={previewUrl} alt="Image preview" fill objectFit="contain" />
                 <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <Button variant="destructive" size="icon" onClick={handleReset}>
                         <X className="h-5 w-5"/>
@@ -220,8 +220,8 @@ export function TeaLeafClient() {
             onDrop={handleDrop}
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center text-muted-foreground">
-              <UploadCloud className="w-10 h-10 mb-4" />
-              <p className="mb-2 text-sm font-semibold text-foreground">Click or drag & drop to upload</p>
+              <UploadCloud className="w-8 h-8 sm:w-10 sm:h-10 mb-4" />
+              <p className="mb-2 text-xs sm:text-sm font-semibold text-foreground">Click or drag & drop to upload</p>
               <p className="text-xs">PNG, JPG, or GIF (max 4MB)</p>
             </div>
             <input
