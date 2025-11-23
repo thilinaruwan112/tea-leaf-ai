@@ -129,7 +129,7 @@ export function TeaLeafClient() {
         </CardHeader>
         <CardContent className="grid md:grid-cols-2 gap-6 lg:gap-8 items-start">
           <div className="flex flex-col gap-4">
-            <div className="w-full aspect-1 rounded-lg overflow-hidden border-2 border-primary/20 shadow-md relative">
+            <div className="w-full aspect-square rounded-lg overflow-hidden border-2 border-primary/20 shadow-md relative">
               <Image src={previewUrl} alt="Uploaded tea leaf" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
