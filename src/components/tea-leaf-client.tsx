@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 import { Leaf, Loader2, RefreshCw, UploadCloud, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 const fileToDataUri = (file: File) => new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
@@ -132,6 +134,31 @@ export function TeaLeafClient() {
             <div className="w-full aspect-square rounded-lg overflow-hidden border-2 border-primary/20 shadow-md relative">
               <Image src={previewUrl} alt="Uploaded tea leaf" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
+            {analysis.qualityMetrics && analysis.qualityMetrics.length > 0 && (
+                <div>
+                  <h3 className="text-xl font-bold font-headline mb-3 text-foreground/90">Quality Measurements</h3>
+                  <ChartContainer
+                    config={{
+                      value: {
+                        label: "Value",
+                        color: "hsl(var(--chart-1))",
+                      },
+                    }}
+                    className="w-full h-[250px]"
+                  >
+                    <BarChart data={analysis.qualityMetrics} margin={{ left: -20 }}>
+                      <CartesianGrid vertical={false} />
+                      <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
+                      <YAxis tickFormatter={(value) => `${value}%`} />
+                      <ChartTooltip
+                        cursor={false}
+                        content={<ChartTooltipContent hideLabel />}
+                      />
+                      <Bar dataKey="value" fill="var(--color-value)" radius={8} />
+                    </BarChart>
+                  </ChartContainer>
+                </div>
+              )}
           </div>
           <div className="flex flex-col gap-4">
             <div>
